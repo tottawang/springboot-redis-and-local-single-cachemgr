@@ -24,8 +24,7 @@ public class LocalCacheRepository {
 
   @PostConstruct
   public void init() {
-    loadingCache = (LoadingCache<String, List<User>>) Caffeine.newBuilder()
-        .expireAfterWrite(60000, TimeUnit.MILLISECONDS)
+    loadingCache = Caffeine.newBuilder().expireAfterWrite(60000, TimeUnit.MILLISECONDS)
         .build(new CacheLoader<String, List<User>>() {
           @Override
           public List<User> load(String token) throws Exception {
@@ -51,7 +50,6 @@ public class LocalCacheRepository {
 
   public void evictEmptyUsers() {
     loadingCache.invalidate("emptyUsers");
-
   }
 
 
